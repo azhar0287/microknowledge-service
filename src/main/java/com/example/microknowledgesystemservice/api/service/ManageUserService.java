@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -20,10 +21,10 @@ public class ManageUserService {
         this.userRepository = userRepository;
     }
 
-    public Boolean createUser(String uuid, String name, String userId, String password) {
+    public boolean createUser(String name, String userId, String password) {
         try {
-            User oldObj = userRepository.getUserByUuid(uuid);
-            if(oldObj == null) {
+            List<User> existingUsers = userRepository.findAll();
+            if(!existingUsers.stream().anyMatch(user -> user.getUserId().equalsIgnoreCase(userId))){
                 User user = new User();
                 user.setUuid(UUID.randomUUID().toString());
                 user.setName(name);
@@ -33,6 +34,11 @@ public class ManageUserService {
                 LOGGER.info("User has created with name: "+user.getName());
                 return true;
             }
+            else {
+                LOGGER.info("UserId already exists: userID "+userId);
+                return false;
+            }
+
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

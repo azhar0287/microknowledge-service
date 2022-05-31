@@ -20,8 +20,10 @@ public class ManageMicroKnowledgeService {
     UserRepository userRepository;
     @Autowired
     MicroKnowledgeRepository microknowledgeRepository;
+    @Autowired
+    MicroKnowledgeSystem microKnowledgeSystemService;
 
-    public boolean createMicroKnowledge(String uuid, String keywords, String content, String userId) {
+    public boolean createMicroKnowledge(String uuid, String keywords, String content) {
         try {
             MicroKnowledge oldMk = microknowledgeRepository.getMicroKnowledgeByUUid(uuid);
             if(oldMk == null) { //If no object exits against provided unique id (uuid)
@@ -32,7 +34,7 @@ public class ManageMicroKnowledgeService {
                 mk.setStarNumber(0);
 
                 /*Setting user instances*/
-                User user = userRepository.getUserByUserId(userId); //Assuming current user from id
+                User user = microKnowledgeSystemService.currentUser;
                 user.setMicroKnowledge(mk);
                 mk.setBelongedUser(user);
                 mk.setContainedUser(user);

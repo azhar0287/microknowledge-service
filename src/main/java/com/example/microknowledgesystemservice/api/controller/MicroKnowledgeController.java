@@ -4,7 +4,6 @@ import com.example.microknowledgesystemservice.api.service.ManageMicroKnowledgeS
 import com.example.microknowledgesystemservice.api.service.ManageUserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,17 +23,17 @@ public class MicroKnowledgeController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     public boolean createMicroKnowledge(@RequestParam("keywords") String keywords, @RequestParam("content") String content,
-                                        @RequestParam("userId") String userId, @RequestParam("uuid") String uuid) {
+                                        @RequestParam("uuid") String uuid) {
         LOGGER.info("Request received for MK creation");
-        return manageMicroKnowledgeService.createMicroKnowledge(uuid, keywords, content, userId);
+        return manageMicroKnowledgeService.createMicroKnowledge(uuid, keywords, content);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseBody
     public boolean createUser(@RequestParam("name") String name, @RequestParam("password") String password,
-                              @RequestParam("uuid") String uuid, @RequestParam("userId") String userId) {
+                              @RequestParam("userId") String userId) {
         LOGGER.info("Request received for user creation");
-        return manageUserService.createUser(uuid, name, userId, password);
+        return manageUserService.createUser(name, userId, password);
     }
 
     @RequestMapping(value = "/writeComment", method = RequestMethod.POST)
