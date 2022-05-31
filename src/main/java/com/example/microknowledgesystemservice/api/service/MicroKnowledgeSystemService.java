@@ -104,8 +104,6 @@ public class MicroKnowledgeSystemService {
         return false;
     }
 
-
-
     boolean createComment(String content) {
         try {
             Comment comment = new Comment();
@@ -113,13 +111,11 @@ public class MicroKnowledgeSystemService {
             comment.setUuid(UUID.randomUUID().toString());
             MicroKnowledge mk = new MicroKnowledge();
             User user = new User();
-//            user.se
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
         return false;
     }
-
 
 }

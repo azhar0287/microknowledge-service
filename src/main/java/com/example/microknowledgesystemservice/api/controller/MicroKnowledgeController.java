@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class MicroKnowledgeController {
     private static final Logger LOGGER = LogManager.getLogger(MicroKnowledgeController.class);
 
-    @Autowired
-    ManageUserService manageUserService;
-    @Autowired
-    ManageMicroKnowledgeService manageMicroKnowledgeService;
+    final ManageUserService manageUserService;
+    final ManageMicroKnowledgeService manageMicroKnowledgeService;
 
+    public MicroKnowledgeController(ManageMicroKnowledgeService manageMicroKnowledgeService, ManageUserService manageUserService) {
+        this.manageMicroKnowledgeService = manageMicroKnowledgeService;
+        this.manageUserService = manageUserService;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
@@ -35,8 +37,6 @@ public class MicroKnowledgeController {
         return manageUserService.createUser(uuid, name, userId, password);
     }
 
-
-
     @RequestMapping(value = "/writeComment", method = RequestMethod.POST)
     @ResponseBody
     public boolean writeComment(@RequestParam("name") String name, @RequestParam("password") String password,
@@ -45,5 +45,4 @@ public class MicroKnowledgeController {
         //return manageUserService.createUser(uuid, name, password);
         return false;
     }
-
 }
