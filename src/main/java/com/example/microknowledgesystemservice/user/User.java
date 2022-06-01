@@ -27,6 +27,7 @@ public class User {
     private String uuid;
     private String role;  //i.e Reader
 
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_reader_id")
     private Comment comment;

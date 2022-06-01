@@ -36,11 +36,11 @@ public class MicroKnowledge {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "belonged_user_id")
+    @JsonIgnore
     private User belongedUser;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "microKnowledge")
     private Set<Comment> containedComment;
-
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "comment_micro_id")
