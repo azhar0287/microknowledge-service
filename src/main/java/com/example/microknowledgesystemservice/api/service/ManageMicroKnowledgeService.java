@@ -48,13 +48,13 @@ public class ManageMicroKnowledgeService {
         return false;
     }
 
-    boolean modifyMicroKnowledge(String uuid, String keywords, String content) {
+    public boolean modifyMicroKnowledge(String uuid, String keywords, String content) {
         try {
             MicroKnowledge oldMk = microknowledgeRepository.getMicroKnowledgeByUUid(uuid);
             if(oldMk != null) {
                 oldMk.setContent(content);
                 oldMk.setKeywords(keywords);
-                //here StarNumber will remain previous one as we are not setting it here
+                oldMk.setStarNumber(oldMk.getStarNumber()- 1);  //changes to previous value
                 return true;
             }
 

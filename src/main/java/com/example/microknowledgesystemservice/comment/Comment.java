@@ -35,7 +35,7 @@ public class Comment {
 
     //comment
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "contain_comment_id", nullable = false)
+    @JoinColumn(name = "contain_comment_id")
     @JsonIgnore
     private MicroKnowledge microKnowledge;
 

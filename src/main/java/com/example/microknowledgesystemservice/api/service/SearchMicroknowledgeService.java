@@ -49,6 +49,7 @@ public class SearchMicroknowledgeService {
             microKnowledge = microKnowledgeRepository.getMicroKnowledgeByUUid(uuid);
             if( microKnowledge != null) {
                 microKnowledgeSystem.currentMicroKnowledge = microKnowledge; //setting this to current MK
+                LOGGER.info("Micro knowledge has set to CCurrent MK");
                 return microKnowledge;
             }
             else {

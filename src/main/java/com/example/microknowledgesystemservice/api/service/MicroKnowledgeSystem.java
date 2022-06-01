@@ -29,13 +29,13 @@ public class MicroKnowledgeSystem {
     public User currentUser;
     public MicroKnowledge currentMicroKnowledge;
 
-    Boolean doLogin(String userId, String password) {
+    public boolean doLogin(String userId, String password) {
         try {
             if(!userId.equalsIgnoreCase("") && !password.equalsIgnoreCase("")) {
                 User user = userRepository.getUserByCredentials(userId, password);
                 if(user != null) {
                     currentUser = user;
-                    LOGGER.info("User has successfully logged in");
+                    LOGGER.info("User has successfully logged in and set to current user: "+currentUser.getUserId());
                     return true;
                 }
                 else {
@@ -48,7 +48,7 @@ public class MicroKnowledgeSystem {
         return false;
     }
 
-    boolean starMicroKnowledge() {
+    public boolean starMicroKnowledge() {
         try {
             //pre condition
             if(this.currentUser != null && this.currentMicroKnowledge !=null) {
@@ -57,6 +57,7 @@ public class MicroKnowledgeSystem {
                 Set<MicroKnowledge> mk = new HashSet<>();
                 mk.add(this.currentMicroKnowledge);
                 currentUser.setStaredMicroKnowledge(mk);
+                LOGGER.info("Current microKnowledge starNumb: "+this.currentMicroKnowledge.getStarNumber());
                 return true;
             }
             else {
@@ -70,7 +71,7 @@ public class MicroKnowledgeSystem {
         return false;
     }
 
-    boolean writeComment(String content) {
+    public boolean writeComment(String content) {
         try {
             if(this.currentUser != null && this.currentMicroKnowledge !=null) {
                 Comment comment = new Comment();
@@ -78,11 +79,12 @@ public class MicroKnowledgeSystem {
                 comment.setUuid(UUID.randomUUID().toString());
                 Set<Comment> comments  = new HashSet<>();
                 comments.add(comment);
+                commentRepository.save(comment);
                 this.currentUser.setReaderToComment(comments);
                 this.currentMicroKnowledge.setContainedComment(comments);
                 comment.setCommentToMicroKnowledge(this.currentMicroKnowledge);
                 comment.setCommentToReader(this.currentUser);
-                commentRepository.save(comment);
+
                 return true;
             } else {
                 LOGGER.info("Either current user or currentMK dont exists");
@@ -96,7 +98,7 @@ public class MicroKnowledgeSystem {
         return false;
     }
 
-    Set<MicroKnowledge> listStaredMicroKnowledge() {
+    public Set<MicroKnowledge> listStaredMicroKnowledge() {
         try {
             if(this.currentUser != null) {
                 return this.currentUser.getStaredMicroKnowledge();

@@ -22,7 +22,7 @@ public class ListMicroKnowledgeOfUserService {
     @Autowired
     MicroKnowledgeRepository microKnowledgeRepository;
 
-    List<User> searchUserByName(String name) {
+    public List<User> searchUserByName(String name) {
         List<User> users = new ArrayList<>();
         try {
             users = userRepository.getUserByName(name);
